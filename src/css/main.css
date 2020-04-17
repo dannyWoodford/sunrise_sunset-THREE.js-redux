@@ -1,0 +1,26 @@
+@font-face {
+  src: url("https://fonts.googleapis.com/css?family=Raleway:300,400,600&display=swap");
+  font-family: 'Raleway', sans-serif;
+}
+
+body {
+  height: 300vh;
+  width: 100%;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  background: #f1eded;
+  scroll-behavior: smooth;
+}
+
+body .top {
+  height: 100vh;
+  width: 100vw;
+  background: #2e2e2e;
+}
+
+body #container {
+  height: 100vh;
+  width: 100vw;
+}
+/*# sourceMappingURL=main.css.map */
