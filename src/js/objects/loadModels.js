@@ -12,9 +12,10 @@
                 logo = gltf.scene
                 logo.scale.set(.5,.5,.5)
                 logo.rotation.y = 3.38
-                logo.position.y = 32 
+                logo.position.y = -32 
                 logo.position.x = 10 
-                
+
+                gsap.to(logo.position, {y: 32, duration: 3,  ease: "back.out(1.7)"});
                 scene.add(logo);
             }
         )
@@ -27,20 +28,22 @@
                     if ( child.isMesh ) { 
                         
                         child.material.transparent = true;
-                        child.material.opacity = -.4
+                        child.material.opacity = 0
                         moonMaterial = child.material
                         // child.customDepthMaterial = new THREE.MeshStandardMaterial({ alphaTest: .2 });
                         // child.material.color =  new THREE.Color("rgb(255, 0, 0)");
+                        
                 
                     }
                 
                 }  );
-                moon.scale.set(1,1,1)
+                moon.scale.set(2,2,2)
             
                 moon.position.x = 105 
                 moon.position.y = 40 
-                moon.position.z = 0 
+                moon.position.z = -60
 
+                moon.layers.set( 1 );
                 scene.add(moon);
             }
         )

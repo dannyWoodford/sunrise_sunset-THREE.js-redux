@@ -1,15 +1,28 @@
-let container, stats, gui;
-let camera, scene, renderer, light, amblight, dirLight, sun, circleGeo, circleMat, composer, stars, flickerStars, nightSky
+let container = document.getElementById( 'container' );
+let stats, gui;
+let camera, scene, renderer, light, amblight, moonLight, sun, circleGeo, circleMat, composer, stars, flickerStars, nightSky
 let controls, cubeCamera, uniforms, sky, water, loader, dracoLoader, logo, moon, moonMaterial, time ,inclination, parameters;
 let cloudParticle = []
 let clock = new THREE.Clock();
+let documentLength = document.querySelector('body').offsetHeight
+let start = documentLength/3
 let body = document.querySelector('body')
 
+let nightTimeLine = false 
+let dayTimeLine = false
+let day = window.scrollY-10 > start
+let night = window.scrollY+10 < start
 
+// nav
+let navTopOuter = document.querySelector('.top-outer')
+let navTopInner = document.querySelector('.top-inner')
+let navCenter = document.querySelector('.center')
+let navBottomInner = document.querySelector('.bottom-inner')
+let navBottomOuter = document.querySelector('.bottom-outer')
+console.log(window.scrollY)
 
-	function init() {
-            // Get canvas
-				container = document.getElementById( 'container' );
+function init() {
+
 
 			// Create renderer
 				renderer = new THREE.WebGLRenderer({antialias: true});
@@ -24,18 +37,25 @@ let body = document.querySelector('body')
 				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, .01, 20000 );
                 camera.position.set(40, 35, 140 );
                 camera.layers.enable( 0 ); // enabled by default
-                camera.layers.enable( 1 ); // logo and sun
+                camera.layers.disable( 1 ); // logo and sun
 				camera.layers.disable( 2 ); // stars
 				camera.layers.disable( 3 ); // clouds
-
+		
 			// Create lights
 				amblight = new THREE.AmbientLight( 0xffffff, .15 );
                 scene.add(amblight)
 
                 light = new THREE.PointLight( 0xffccaa, 40, 800 );
                 scene.add( light );
-            
-            
+
+                    moonLight = new THREE.PointLight( 0xffb288, 30, 800, 2 );
+                    moonLight.position.set( 50, 40, -10 );
+                    scene.add(moonLight)
+
+                    // let sphereSize = 1;
+                    // let pointLightHelper = new THREE.PointLightHelper( moonLight, sphereSize );
+                    // scene.add( pointLightHelper );
+
 
                 geometry = new THREE.CircleGeometry(100,100);
                 material = new THREE.MeshBasicMaterial({color: 0xffccaa});
@@ -44,15 +64,13 @@ let body = document.querySelector('body')
                 sun.layers.set( 1 );
                 scene.add(sun);
 
-                dirLight = new THREE.DirectionalLight(0xffffff, 3)
-                scene.add(dirLight)
 
                 let godraysEffect = new POSTPROCESSING.GodRaysEffect(camera, sun, {
                     resolutionScale: 1,
                     density: 1,
                     decay: .97,
-                    weight: 0.9,
-                    samples: 100
+                    weight: 0.8,
+                    samples: 35
                 });
                 
                 let areaImage = new Image();
@@ -130,74 +148,78 @@ let body = document.querySelector('body')
                 addStars(300, 1, "#ffffff")
                 addFlickerStars(50, .7, '#fffea8')
 
-			// Create controls
-				controls = new THREE.FirstPersonControls( camera, renderer.domElement );
-                // controls.movementSpeed = 15;
-                // controls.lookSpeed = 0.05;
-                // controls.enabled = true
-
-                //this.mouseDragOn is on true in module;
-				
+            // Create controls
+            
 
 			// Create stats
-                addStats()
+                // addStats()
 
             // Create GUI
                 // addGui()
 
             // Update on scroll
-                updateOnScroll()	
-
-                let documentLength = document.querySelector('#container') 
-                // console.log(documentLength )
-                let start = documentLength/3
-                // window.scroll(0, start);
+            updateOnScroll()
+            
+            // window.scrollTo(0, start);
+            
                 // documentLength.scrollIntoView()
-                
-        
-                let controller = new ScrollMagic.Controller();
-                let scrollScene = new ScrollMagic.Scene({triggerElement: "#container", duration: start})
-                                        .setPin("#container")
-                                        .addTo(controller);
 
+        
+                // let controller = new ScrollMagic.Controller();
+                // let scrollScene = new ScrollMagic.Scene({triggerElement: "#container", duration: start})
+                //                         .setPin("#container")
+                //                         .addTo(controller);
+    }
+
+    function setWindow(){
+        if(nightTimeLine == false && dayTimeLine == false){
+            window.scrollTo(0, start);
+            navCenter.classList.add('current')
+        } else {
+            navCenter.classList.remove('current')
+        }
     }
             
 
 	function animate() {
         requestAnimationFrame( animate )
-        stats.update();
-        controls.update( clock.getDelta() );
+        // stats.update();
+
+        if (moon.position.y > 60){
+            time = performance.now() * 0.008;
+            flickerStars.material.opacity = Math.sin( time )
+            gsap.to( stars.rotation, {x: 1, duration: 2750});
+        } else {
+            moonMaterial.opacity = 0
+        }
         render();
 	}
 
 	function render() {
-        // console.log(moon.position.y)
-        // if (moon.position.y > 60){
-        //     // show stars
-        //     camera.layers.enable( 2 );
-        //     time = performance.now() * 0.008;
-        //     flickerStars.material.opacity = Math.sin( time )
-        //     stars.rotation.x += .0002
-        // } else {
-        //     camera.layers.disable( 2 );
-        // }
-
-
-        // nightSky.rotation.x += .0001
 		water.material.uniforms[ 'time' ].value += 1.0 / 60.0;
-        // renderer.render( scene, camera );
         composer.render(0.1);
+        start = documentLength/3
+        setWindow()
     }
 
 
 
     
+    function enableScroll() { 
+        body.classList.add("start-scrolling"); 
+    } 
+    
+    function disableScroll() { 
+        body.classList.remove("start-scrolling"); 
+    } 
 
 
     // Play scene
     init();
+
+
     setTimeout(() => {
         animate();
-    }, 1000);
+    }, 1300);
 
 

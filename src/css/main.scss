@@ -13,82 +13,214 @@
       @return map-get($colors, $color-name) 
   }
 
-
-body {
-    height: 300vh;
+html{
+    scroll-snap-type: y mandatory;
+    height: 100%;
     width: 100%;
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    background: rgb(241, 237, 237);
-    // overflow: hidden;
-    scroll-behavior: smooth;
 
-    // nav {
-    //     font-family: 'Raleway', sans-serif;
-    //     font-weight: 300;
-    //     height: 10vw;
-    //     width: 100vw;
-    //     position: fixed;
-    //     top: 2vh;
-    //     z-index: 2;
-
-    //     .nav--container {
-    //         display: grid;
-    //         justify-content: end;
-
-    //         ul {
-    //             display: flex;
-    //             flex-direction: row;
-    //             align-content: space-between;
-    //             list-style: none;
-                
-    //             li#current a{
-    //                 text-decoration: underline;
-    //                 font-weight: 400;
-    //                 color: color(text-color);
-    //             }
-    //             a {
-    //                 font-size: 1.3em;
-    //                 color: color(text-color-light);
-    //                 text-decoration: none;
-    //                 margin-left: 30px;
-    //                 margin-right: 30px;
-                    
-    //             }
-
-    //             #menu {
-    //                 filter: invert(1);
-    //                 height:35px;
-    //                 width: 35px;
-    //             }
-
-    //         }
-    //         @media screen and (max-width: 868px) {
-    //             ul{
-    //                 visibility: hidden;
-    //             }
-    
-    //             #menu {
-    //                 visibility: visible;
-    //             }
-    //         }
-    //     }
-
-    // }
-
-    .top{
-        height: 100vh;
-        width: 100vw;
-        background: rgb(46, 46, 46);
+    ::-webkit-scrollbar {
+        display: none;
     }
 
-    #container {
-        // margin-top: 100vh;
-        height: 100vh;
-        width: 100vw;
-        // position: absolute;
+    body {
+        height: 300vh;
+        width: 100%;
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        background: black;
+        overflow: hidden;
+        scroll-behavior: smooth;
         
+        
+ nav {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    height: 80vw;
+    width: 1vw;
+    top: 10vh;
+    position: fixed;
+    right: 2vw;
+    z-index: 2;
+
+    .nav--container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+
+            .top-outer {
+                height: 12vh;
+                width: 15%;
+                background: rgb(214, 214, 214);
+                border-radius: 20px;
+                margin-bottom: 2vh;
+            }
+            .top-inner {
+                height: 15vh;
+                width: 25%;
+                background: white;
+                border-radius: 20px;
+                margin-bottom: 1.5vh;
+            }
+            .center {
+                height: 20vh;
+                width: 45%;
+                background: white;
+                border-radius: 20px;
+            }
+            .bottom-inner {  
+                height: 15vh;
+                width: 25%;
+                background: white;
+                border-radius: 20px;
+                margin-top: 1.5vh;
+            }
+            .bottom-outer {
+                height: 12vh;
+                width: 15%;
+                background: white;
+                border-radius: 20px;
+                margin-top: 2vh;
+            }
+
+            @media screen and (max-width: 868px) {
+            
+            }
+    }
+
+    .current {
+        background: rgb(68, 93, 233) !important;
     }
 
 }
+
+
+        
+        .top1 {
+            height: 10vh;
+            width: 100%;
+            background: rgb(54, 14, 45);
+            scroll-snap-align: start;
+        }
+        .top2 {
+            height: 20vh;
+            width: 100%;
+            background: rgb(44, 22, 33);
+            scroll-snap-align: start;
+        }
+        .top3 {
+            height: 30vh;
+            width: 100%;
+            background: rgb(27, 9, 18);
+            scroll-snap-align: start;
+        }
+        .top4 {
+            height: 40vh;
+            width: 100%;
+            background: rgb(7, 4, 5);
+            scroll-snap-align: start;
+        }
+
+        #container {
+            height: 100vh;
+            width: 100vw;
+            
+            canvas {
+                scroll-snap-align: end;
+            }
+        }
+
+        .bottom4 {
+            height: 40vh;
+            width: 100%;
+            background: rgb(56,127,105);
+            scroll-snap-align: start;
+        }
+        .bottom3 {
+            height: 30vh;
+            width: 100%;
+            background: rgb(74, 141, 120);
+            scroll-snap-align: start;
+        }
+        .bottom2 {
+            height: 20vh;
+            width: 100%;
+            background: rgb(108, 177, 155);
+            scroll-snap-align: start;
+        }
+        .bottom1 {
+            height: 10vh;
+            width: 100%;
+            background: rgb(181, 223, 209);
+            scroll-snap-align: start;
+        }
+
+    }
+
+    .start-scrolling { 
+        overflow: visible; 
+    } 
+}
+
+
+
+
+
+
+
+//  nav {
+//         font-family: 'Raleway', sans-serif;
+//         font-weight: 300;
+//         height: 10vw;
+//         width: 100vw;
+//         position: fixed;
+//         top: 2vh;
+//         z-index: 2;
+
+//         .nav--container {
+//             display: grid;
+//             justify-content: end;
+
+//             ul {
+//                 display: flex;
+//                 flex-direction: row;
+//                 align-content: space-between;
+//                 list-style: none;
+                
+//                 li#current a{
+//                     text-decoration: underline;
+//                     font-weight: 400;
+//                     color: color(text-color);
+//                 }
+//                 a {
+//                     font-size: 1.3em;
+//                     color: color(text-color-light);
+//                     text-decoration: none;
+//                     margin-left: 30px;
+//                     margin-right: 30px;
+                    
+//                 }
+
+//                 #menu {
+//                     filter: invert(1);
+//                     height:35px;
+//                     width: 35px;
+//                 }
+
+//             }
+//             @media screen and (max-width: 868px) {
+//                 ul{
+//                     visibility: hidden;
+//                 }
+    
+//                 #menu {
+//                     visibility: visible;
+//                 }
+//             }
+//         }
+
+//     }
+

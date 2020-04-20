@@ -1,100 +1,144 @@
 
+
 function updateOnScroll(){
     window.addEventListener( 'resize', onWindowResize, false );
-    window.addEventListener("wheel", function(e) {
+    window.addEventListener("wheel", function(event) {
         {
-    // console.info(event.deltaY);
-    // console.log(event.deltaY)
-    // if(moon.position.y <= 106 && moon.position.y >= -46){
-    //     body.style.overflow = 'hidden' 
-    // } else  {
-    //     body.style.overflow = 'scroll' 
-    // }
+        
 
-    if(moon.position.y > 86){
-        // hide sun
-        camera.layers.disable( 1 );
-    } else {
-        camera.layers.enable( 1 );
-    }
+            console.log(moon.position.y)
 
-    if (moon.position.y > 60 ){
-        // show clouds
-        camera.layers.enable( 3 );
-    }else {
-        camera.layers.disable( 3 );
-
-    }
-
-            if (event.deltaY > 0)
+            if (event.deltaY > 0 )
                 {
-                    
-                    
-                    moonMaterial.opacity += .025
-                    moon.scale.x += .01
-                    moon.scale.y += .01
-                    moon.scale.z += .01
-                    moon.rotation.y += .04
-                    moon.position.y += .9
-
-                    cloudParticle.forEach( p => {
-                        p.position.z += 0.9
-                        p.position.x += 0.09
-                        p.rotation.x += .01
-                        if(p.material.opacity < .7){
-                            p.material.opacity += .0008
-                        }
-                    })
-                        stars.material.opacity += .016
-                        if(nightSky.material.opacity < .3){
-                            nightSky.material.opacity += .01
-                        }
+                    if(parameters.inclination >= .32){
+                        parameters.inclination -= .01
                         
-                    sun.position.y -= 19
-                    sun.scale.x -= .013
-                    sun.scale.y -= .013
-                    sun.scale.z -= .013
+                        updateSun()
+                    }
+                    dayTimeLine = true
 
-                    logo.position.y -= 1.1
-                    parameters.inclination += .0014
-                    updateSun()
-                    // console.log(light.position.z, "lightpoition" )
+                        if( navTopInner.classList.contains('current')){
+                            navTopInner.classList.remove('current')
+                            navBottomInner.classList.add('current')
+                        } 
+                        if (!navTopInner.classList.contains('current') && window.scrollY > 818 && window.scrollY < 1070 ){
+                            navTopOuter.classList.remove('current')
+                            navTopInner.classList.remove('current')
+                            navBottomInner.classList.add('current')
+                            navBottomOuter.classList.remove('current')
+                        } 
+                        if (!navTopInner.classList.contains('current') && window.scrollY < 818 ) {
+                            navTopOuter.classList.remove('current')
+                            navTopInner.classList.add('current')
+                            navBottomInner.classList.remove('current')
+                            navBottomOuter.classList.remove('current')
+                        }
+                        if (!navTopInner.classList.contains('current') && window.scrollY > 1070) {
+                            navTopOuter.classList.remove('current')
+                            navTopInner.classList.remove('current')
+                            navBottomInner.classList.remove('current')
+                            navBottomOuter.classList.add('current')
+                        }
+
+                            initialScrollDowntoDayTimeline()
+
+                            setTimeout(() => {
+                                enableScroll()
+                            }, 1700);
                 }
-            else if (event.deltaY < 0)
+                else if (event.deltaY < 0)
                 {
+
+                    if(parameters.inclination <= .51){
+                        parameters.inclination += .03
+                        updateSun()
+                    }
+
+                    // console.log(window.scrollY <= container.offsetTop, "night")
+                    nightTimeLine = true
                     
-                    // console.log('scrolling up');
-                    moonMaterial.opacity -= .025
-                    moon.scale.x -= .01
-                    moon.scale.y -= .01
-                    moon.scale.z -= .01
-                    moon.rotation.y -= .04
-                    moon.position.y -= .9
-
-                    cloudParticle.forEach( p => {
-                        p.position.z -= 0.9
-                        p.position.x -= 0.09
-                        p.rotation.x -= .01
-                        if(p.material.opacity > 0){
-                            p.material.opacity -= .0008
-                        }
-                    })
-
-                        stars.material.opacity -= .016
-                        if(nightSky.material.opacity > .2){
-                            nightSky.material.opacity -= .01
-                        }
-
-                    sun.position.y += 19
-                    sun.scale.x += .013
-                    sun.scale.y += .013
-                    sun.scale.z += .013
-
-                    logo.position.y += 1.1
-                    parameters.inclination -= .0014
-                    updateSun()
-                    // console.log(parameters.inclination)
+                    if( navBottomInner.classList.contains('current')){
+                        navBottomInner.classList.remove('current')
+                        navTopInner.classList.add('current')
+                    } 
+                    if (!navBottomInner.classList.contains('current') && window.scrollY < 821 && window.scrollY > 636 ){
+                        navTopOuter.classList.remove('current')
+                        navTopInner.classList.add('current')
+                        navBottomInner.classList.remove('current')
+                        navBottomOuter.classList.remove('current')
+                    } 
+                    if (!navBottomInner.classList.contains('current') && window.scrollY > 821) {
+                        navTopOuter.classList.remove('current')
+                        navTopInner.classList.remove('current')
+                        navBottomInner.classList.add('current')
+                        navBottomOuter.classList.remove('current')
+                    }
+                    if (!navBottomInner.classList.contains('current') && window.scrollY < 636) {
+                        navBottomOuter.classList.remove('current')
+                        navBottomInner.classList.remove('current')
+                        navTopInner.classList.remove('current')
+                        navTopOuter.classList.add('current')
+                    }
+                            initialScrollUptoNightTimeline()
+                            setTimeout(() => {
+                                enableScroll()
+                            }, 1700);
+        
                 }
         }
     })
+}
+
+
+function initialScrollUptoNightTimeline(){
+    let tl1 = gsap.timeline()
+    tl1.to(logo.position, {y: -30, duration: 3, delay: .1,},0);
+    camera.layers.disable( 1 )
+    tl1.to(sun.position, {y: -75, duration: 1.5},0);
+    tl1.to(sun.scale, {x: 1.7, y: 1.7, z:1.7 , duration: 1.5},0);
+
+    tl1.to(moon.position, {y: 150, duration: 3},0);
+    tl1.to(moon.scale, {x: 3, y: 3, z:3 , duration: 3.5},0);
+    tl1.to(moonMaterial, {opacity: 1, duration: 3},0);
+    tl1.to(moon.rotation, {y: '60', duration: 100 , ease:Linear.easeNone, repeat:-1},0);
+    
+    camera.layers.enable( 3 )
+        cloudParticle.forEach( p => {
+            let cloudTl = gsap.timeline();
+            cloudTl.to(p.position, {z: 160, duration: 10.5,  ease: "bounce.out"},0);
+            cloudTl.to(p.position, {x: 1, duration: 10.5},0);
+            cloudTl.to(p.rotation, {x: 1, duration: 10.5},0);
+            
+            cloudTl.fromTo( p.material,{opacity: Math.random()* .3 - .3}, {opacity: .4, duration: 10 },0);
+        })
+
+    camera.layers.enable( 2 )
+    tl1.to( stars.material, {opacity: 1, duration: 5},0);
+    tl1.to( nightSky.material, {opacity: .3, duration: 5},0);
+}
+
+
+function initialScrollDowntoDayTimeline() {
+    let tl2 = gsap.timeline()
+
+    camera.layers.enable( 1 )
+    tl2.to(logo.position, {y: 80, duration: 2},0);
+    
+    tl2.to(sun.position, {y: 1800, duration: 3.5},0);
+    tl2.to(sun.scale, {x: 3, y: 3, z: 3 , duration: 4.5},0);
+    
+    tl2.to(moon.position, {y: 40, duration: 2},0);
+    tl2.to(moon.scale, {x: 1, y: 1, z:1 , duration: 2},0);
+
+    setTimeout(() => {
+        camera.layers.disable( 2 )
+        camera.layers.disable( 3 )
+    }, 600);
+}
+
+
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize( window.innerWidth, window.innerHeight );
 }

@@ -15,7 +15,7 @@ function addClouds(){
             let cloud = new THREE.Mesh(cloudGeo, cloudMaterial)
                 cloud.position.set(
                     Math.random()* 800 -350,
-                    Math.random()* 10 +5,
+                    Math.random()* 10 +8,
                     Math.random()* -300 +100,
                 )
                 cloud.rotation.x = 3.1
@@ -23,6 +23,8 @@ function addClouds(){
                 cloud.material.opacity = Math.random()* .3 - .3,
 
                 cloudParticle.push(cloud)
+
+                
                 cloud.layers.set( 3);
                 scene.add(cloud) 
         }
