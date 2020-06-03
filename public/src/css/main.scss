@@ -1,0 +1,225 @@
+@font-face {
+    src: url('https://fonts.googleapis.com/css?family=Raleway:300,400,600&display=swap');
+    font-family: 'Raleway', sans-serif;
+  }
+
+
+html{
+    scroll-snap-type: y mandatory;
+    height: 100%;
+    width: 100%;
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    body {
+        height: 300vh;
+        width: 100%;
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        background: black;
+        overflow: hidden;
+        scroll-behavior: smooth;
+
+        
+        .full-screen-loading-background {
+            height: 100vh;
+            width: 100vw;
+            position: fixed; 
+            z-index: 3;
+            background: black;
+
+            .loading-container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                
+                .loading-ring {
+                    width: 300px;
+                    height: 300px;
+                    border-radius: 50%;
+                    box-shadow: 0 4px 0 #262626;
+                    background: transparent;
+                    animation: animate 1s infinite linear;
+                }
+                .text {
+                    width: 300px;
+                    height: 300px;
+                    border-radius: 50%;
+                    color: #262626;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    text-align: center;
+                    line-height: 300px;
+                    font-size: 2em;
+                    background: transparent;
+                    box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+                }
+                @keyframes animate {
+                    0% {
+                    transform: rotate(0deg);
+                    }
+                    100% {
+                    transform: rotate(360deg);
+                    }
+                }
+            }
+        }
+
+        .hide-loading-page {
+            visibility: collapse;
+        }
+                
+        nav {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 300;
+            height: 80vw;
+            width: 1vw;
+            top: 10vh;
+            position: fixed;
+            right: 2vw;
+            z-index: 2;
+
+            .nav--container {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: center;
+
+                    .top-outer {
+                        height: 12vh;
+                        width: 20%;
+                        background: rgba(255, 255, 255, .2);
+                        border-radius: 20px;
+                        margin-bottom: 2vh;
+                    }
+                    .top-inner {
+                        height: 15vh;
+                        width: 30%;
+                        background: rgba(255, 255, 255, .2);
+                        border-radius: 20px;
+                        margin-bottom: 1.5vh;
+                    }
+                    .center {
+                        height: 20vh;
+                        background: none !important;
+                        display: flex;
+                        justify-content: center;
+                        color: rgba(255, 255, 255, .2);
+                        font-size: 4vh;
+                        writing-mode: vertical-rl;
+                        text-orientation: mixed;
+                    }
+                    
+                    .bottom-inner {  
+                        height: 15vh;
+                        width: 30%;
+                        background: rgba(255, 255, 255, .2);
+                        border-radius: 20px;
+                        margin-top: 1.5vh;
+                    }
+                    .bottom-outer {
+                        height: 12vh;
+                        width: 20%;
+                        background: rgba(255, 255, 255, .2);
+                        border-radius: 20px;
+                        margin-top: 2vh;
+                    }
+
+                    @media screen and (max-width: 868px) {
+                    
+                    }
+            }
+
+            .current {
+                background: rgb(255, 255, 255) !important;
+                color: rgb(255, 255, 255) !important;
+            }
+
+        }
+
+        
+        .top1 {
+            height: 10vh;
+            width: 100%;
+            background: rgb(58, 29, 43);
+            scroll-snap-align: start;
+        }
+        .top2 {
+            height: 20vh;
+            width: 100%;
+            background: rgb(44, 22, 33);
+            scroll-snap-align: start;
+        }
+        .top3 {
+            height: 30vh;
+            width: 100%;
+            background: rgb(27, 9, 18);
+            scroll-snap-align: start;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 7vw;
+        }
+        .top4 {
+            height: 40vh;
+            width: 100%;
+            background: rgb(17, 6, 12);
+            scroll-snap-align: start;
+        }
+
+        #container {
+            height: 100vh;
+            width: 100vw;
+            
+            canvas {
+                scroll-snap-align: end;
+            }
+        }
+
+        .bottom4 {
+            height: 40vh;
+            width: 100%;
+            background: rgb(56,127,105);
+            scroll-snap-align: start;
+        }
+        .bottom3 {
+            height: 30vh;
+            width: 100%;
+            background: rgb(74, 141, 120);
+            scroll-snap-align: start;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 7vw;
+        }
+        .bottom2 {
+            height: 20vh;
+            width: 100%;
+            background: rgb(108, 177, 155);
+            scroll-snap-align: start;
+        }
+        .bottom1 {
+            height: 10vh;
+            width: 100%;
+            background: rgb(181, 223, 209);
+            scroll-snap-align: start;
+        }
+    }
+
+
+    .start-scrolling { 
+        overflow: visible; 
+    } 
+}
+
+
+
